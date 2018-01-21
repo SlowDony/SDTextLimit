@@ -37,7 +37,7 @@
         _textFiled.frame = CGRectMake(20, (height-30)/2, width-40, 30);
         _textFiled.delegate = self;
         _textFiled.tag = 0;
-        _textFiled.placeholder = @"请输入文字";
+        _textFiled.placeholder = self.placeholder;
         _textFiled.font = [UIFont systemFontOfSize:15];
         _textFiled.textColor =[UIColor blackColor];
         _textFiled.clearButtonMode =  UITextFieldViewModeNever;
@@ -54,7 +54,7 @@
         _textView =[[SDBaseTextView alloc]init];
         _textView.frame =CGRectMake(20, (height-100)/2, width-40, 100);
         _textView.delegate = self;
-        _textView.placeholder = @"请输入汉字";
+        _textView.placeholder = self.placeholder;
         _textView.backgroundColor = [UIColor clearColor];
         _textView.textColor = [UIColor blackColor];
         _textView.textAlignment = NSTextAlignmentLeft;
@@ -70,9 +70,10 @@
     [super viewDidLoad];
     self.title = @"SDTextViewController";
     self.view.backgroundColor = [UIColor whiteColor];
-    if (self.textViewVCType==TextViewVCTypeTextFiled){
+    if(self.textViewVCType==TextViewVCTypeTextFiledNum || self.textViewVCType == TextViewVCTypeTextFiledNumCharacter){
         [self setupTextFiled];
-    }else {
+    }
+    else {
         [self setupTextView];
     }
     // Do any additional setup after loading the view.
@@ -87,11 +88,23 @@
 }
 
 - (void)textFiledChanged:(UITextField *)textFiled{
+    if (self.textViewVCType == TextViewVCTypeTextFiledNum){
+      
+    [SDTextLimitTool restrictionInputTextField:textFiled maxNumber:15];
+        
+    }else {
+        [SDTextLimitTool restrictionInputTextFieldMaskSpecialCharacter:textFiled maxNumber:15];
+    }
+    
     
 }
 
 - (void)textViewDidChange:(UITextView *)textView{
-    
+    if (self.textViewVCType == TextViewVCTypeTextViewNum){
+        [SDTextLimitTool restrictionInputTextView:textView maxNumber:15];
+    }else {
+        [SDTextLimitTool restrictionInputTextViewMaskSpecialCharacter:textView maxNumber:15];
+    }
 }
 
 

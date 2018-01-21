@@ -31,8 +31,10 @@ UITableViewDataSource
 -(NSMutableArray *)dataArr{
     if (!_dataArr){
         NSArray *arr = @[
-                     @"textField限制字数",
-                     @"textView限制字数",
+                     @"textField限制字数(15个)",
+                     @"textField限制字数(15个)和特殊字符",
+                     @"textView限制字数(15个)",
+                     @"textView限制字数(15个)和特殊字符",
                      ];
         
         _dataArr = [NSMutableArray arrayWithArray:arr];
@@ -89,6 +91,7 @@ UITableViewDataSource
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SDTextViewController *textVC = [[SDTextViewController alloc]init];
+    textVC.placeholder = self.dataArr[indexPath.row];
     textVC.textViewVCType = indexPath.row;
     [self.navigationController pushViewController:textVC animated:YES];
     
