@@ -62,7 +62,10 @@
         MyLog(@"haha ");
         
         if(toBeString.length > maxNumber) {
-            textField.text= [toBeString substringToIndex:maxNumber];
+           // textField.text= [toBeString substringToIndex:maxNumber];
+           //3月19日更新
+           //防止表情被截段
+             textField.text = [[self class] subStringWith:toBeString index:maxNumber];
         }
     }
 }
@@ -195,8 +198,11 @@
         MyLog(@"haha ");
         
         if(toBeString.length > maxNumber) {
-            textField.text= [toBeString substringToIndex:maxNumber];
-        }
+            //textField.text= [toBeString substringToIndex:maxNumber];
+            //3月19日更新
+            //防止表情被截段
+            textField.text = [[self class] subStringWith:toBeString index:maxNumber];
+          }
     }
     
 }
@@ -262,6 +268,20 @@ UITextView同上方法
 
 参考[这篇文章](http://zeeyang.com/2015/09/17/TextField_count_limit_handle/)
 
+# 3月19更新
 
+```
+//防止原生emoji表情被截断
++ (NSString *)subStringWith:(NSString *)string index:(NSInteger)index{
+
+    NSString *result = string;
+    if (result.length > index) {
+        NSRange rangeIndex = [result rangeOfComposedCharacterSequenceAtIndex:index];
+        result = [result substringToIndex:(rangeIndex.location)];
+    }
+
+    return result;
+}
+```
 
 
