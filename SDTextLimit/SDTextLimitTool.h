@@ -56,4 +56,9 @@
  */
 + (void)restrictionInputTextView:(UITextView *)textView maxNumber:(NSInteger)maxNumber;
 
+/**
+ 防止原生emoji表情被截断
+ */
++ (NSString *)subStringWith:(NSString *)string index:(NSInteger)index;
+
 @end

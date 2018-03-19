@@ -164,7 +164,8 @@
     else{ //中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
         
         if(toBeString.length > maxNumber) {
-            textField.text= [toBeString substringToIndex:maxNumber];
+            //防止表情被截段
+            textField.text = [[self class] subStringWith:toBeString index:maxNumber];
         }
     }
     
@@ -190,9 +191,24 @@
         }
     } else{ //中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
         if(toBeString.length > maxNumber) {
-            textView.text= [toBeString substringToIndex:maxNumber];
             
+            //防止表情被截段
+            textView.text = [[self class] subStringWith:toBeString index:maxNumber];
         }
     }
+}
+
+/**
+ 防止原生emoji表情被截断
+ */
++ (NSString *)subStringWith:(NSString *)string index:(NSInteger)index{
+    
+    NSString *result = string;
+    if (result.length > index) {
+        NSRange rangeIndex = [result rangeOfComposedCharacterSequenceAtIndex:index];
+        result = [result substringToIndex:(rangeIndex.location)];
+    }
+    
+    return result;
 }
 @end
