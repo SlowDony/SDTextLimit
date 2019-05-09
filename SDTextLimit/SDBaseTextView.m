@@ -32,7 +32,7 @@
  *  监听文字改变
  */
 -(void)textDidChange {
-    
+    NSLog(@"jajhanihaolllll");
     //重绘
     [self setNeedsDisplay];
     
